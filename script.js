@@ -1,11 +1,27 @@
+
+
+
+
 function getMain() {
   const container = document.createElement('div');
   container.className = 'container';
   document.body.append(container);
   const p = document.createElement('p');
   p.className = 'title';
-  p.innerHTML = 'RSS Виртуальная клавиатура';
   container.append(p);
+
+  let textTitle = "RSS Виртуальная клавиатура";
+  let i = 0;
+  let speed = 100;
+  function type() {
+      if (i < textTitle.length) {
+          p.innerHTML += textTitle.charAt(i);
+          i++;
+          setTimeout(type, speed);
+      }
+  }
+  type();
+
   const text = document.createElement('textarea');
   text.className = 'textarea';
   container.append(text);
@@ -38,6 +54,10 @@ function getMain() {
 }
 
 getMain();
+
+
+
+
 
 
 const keys1 = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
