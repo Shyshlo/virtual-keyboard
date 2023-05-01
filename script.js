@@ -96,10 +96,10 @@ const OKEnS = Object.keys(kCEnS);
 const OKRu = Object.keys(keyCodRu);
 const OKRuS = Object.keys(kCRuS);
 
-if (localStorage.getItem('lang') === null) {
+if (localStorage.getItem('language') === null) {
   lang = DefLang;
-} else if (localStorage.getItem('lang') !== null) {
-  lang = localStorage.getItem('lang');
+} else if (localStorage.getItem('language') !== null) {
+  lang = localStorage.getItem('language');
 }
 
 
@@ -389,6 +389,8 @@ document.onkeydown = function keyAddActive(e) {
   }
 }
 
+
+
 function keyboard() {
     for (let i = 0; i < button.length; i += 1) {
       button[i].addEventListener('click', (e) => {
@@ -436,3 +438,97 @@ function keyboard() {
   keyboard();
 
   
+  document.onkeyup = function keyRemove(e) {
+    for (let i = 0; i < button.length; i += 1) {
+      if (button[i].classList.contains(e.code) && leftKeys.includes(e.code)) {
+        e.preventDefault();
+        button[i].classList.remove('active');
+      } else if (button[i].innerText === 'Delete' && e.code === 'Delete') {
+        button[i].classList.remove('active');
+      } else if (button[i].innerText === 'Enter' && e.code === 'Enter') {
+        button[i].classList.remove('active');
+      } else if (button[i].innerHTML === ' ' && e.code === 'Space') {
+        button[i].classList.remove('active');
+      } else if (button[i].innerText === 'Tab' && e.code === 'Tab') {
+        button[i].classList.remove('active');
+      } else if (button[i].innerText === 'Backspace' && e.code === 'Backspace') {
+        button[i].classList.remove('active');
+      } else if (button[i].innerText === 'Win' && e.key === 'Meta') {
+        button[i].classList.remove('active');
+      }
+    }
+  
+    if (lang === 'en' && shiftSwitch === false) {
+      for (let i = 0; i < button.length; i += 1) {
+        const textUp = button[i].innerText.toUpperCase();
+        for (let k = 0; k < OKEn.length; k += 1) {
+          if (e.keyCode === Number(OKEn[k]) && textUp === keyCodEn[OKEn[k]].toUpperCase()) {
+            button[i].classList.remove('active');
+          }
+        }
+      }
+    } else if (lang === 'en' && shiftSwitch === true) {
+      for (let i = 0; i < button.length; i += 1) {
+        const textUp = button[i].innerText.toUpperCase();
+        for (let k = 0; k < OKEnS.length; k += 1) {
+          if (e.keyCode === Number(OKEnS[k]) && textUp === kCEnS[OKEnS[k]].toUpperCase()) {
+            button[i].classList.remove('active');
+          }
+        }
+      }
+    } else if (lang === 'ru' && shiftSwitch === false) {
+      for (let i = 0; i < button.length; i += 1) {
+        const textUp = button[i].innerText.toUpperCase();
+        for (let k = 0; k < OKRu.length; k += 1) {
+          if (e.keyCode === Number(OKRu[k]) && textUp === keyCodRu[OKRu[k]].toUpperCase()) {
+            button[i].classList.remove('active');
+          }
+        }
+      }
+    } else if (lang === 'ru' && shiftSwitch === true) {
+      for (let i = 0; i < button.length; i += 1) {
+        const textUp = button[i].innerText.toUpperCase();
+        for (let k = 0; k < OKRuS.length; k += 1) {
+          if (e.keyCode === Number(OKRuS[k]) && textUp === kCRuS[OKRuS[k]].toUpperCase()) {
+            button[i].classList.remove('active');
+          }
+        }
+      }
+    }
+  
+    if (e.key === 'Shift') {
+      shiftUp();
+    }
+  
+    if (e.key === 'Control') {
+      langTogle = false;
+    }
+  
+    if (e.key === 'Alt' && langTogle && lang === 'en') {
+      e.preventDefault();
+      for (let i = 0; i < button.length; i += 1) {
+        const bttntxt = button[i].innerText;
+        if (!arrows.includes(bttntxt) && capsTogle === false) {
+          button[i].innerText = keysRu[i];
+        } else if (!arrows.includes(bttntxt) && !keysSpec.includes(bttntxt) && capsTogle === true) {
+          button[i].innerText = keysRu[i].toUpperCase();
+        }
+      }
+      lang = 'ru';
+      localStorage.setItem('lang', 'ru');
+    } else if (e.key === 'Alt' && langTogle && lang === 'ru') {
+      e.preventDefault();
+      for (let i = 0; i < button.length; i += 1) {
+        const bttntxt = button[i].innerText;
+        if (!arrows.includes(bttntxt) && capsTogle === false) {
+          button[i].innerText = keysEn[i];
+        } else if (!arrows.includes(bttntxt) && !keysSpec.includes(bttntxt) && capsTogle === true) {
+          button[i].innerText = keysEn[i].toUpperCase();
+        }
+      }
+      lang = 'en';
+      localStorage.setItem('lang', 'en');
+    }
+  };
+  
+
