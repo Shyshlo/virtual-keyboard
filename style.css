@@ -85,6 +85,12 @@
     background-color: #81ab98;
     transform: scale(1.06);
    }
+   .button:active {
+    background-color: #81ab98;
+    transform: scale(0.9);
+    box-shadow: 2px 0px 3px rgba(0,0.5,0,0), 2px 0px 3px #fff;
+    border-radius: 6px;
+  }
 
   .button.active {
     background-color: #81ab98;
