@@ -389,4 +389,49 @@ document.onkeydown = function keyAddActive(e) {
   }
 }
 
-
+function keyboard() {
+    for (let i = 0; i < button.length; i += 1) {
+      button[i].addEventListener('click', (e) => {
+        if (!button[i].classList.contains('special') && !keysSpec.includes(button[i].innerHTML)) {
+          const { selectionStart } = textarea;
+          const tv = textarea.value;
+          const keyText = e.target.innerText;
+          textarea.value = tv.substr(0, selectionStart) + keyText + tv.substr(selectionStart);
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        } else if (button[i].classList.contains('Space')) {
+          const { selectionStart } = textarea;
+          const tv = textarea.value;
+          textarea.value = `${tv.substr(0, selectionStart)} ${tv.substr(selectionStart)}`;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        } else if (button[i].classList.contains('Enter')) {
+          const { selectionStart } = textarea;
+          const tv = textarea.value;
+          textarea.value = `${tv.substr(0, selectionStart)}\n${tv.substr(selectionStart)}`;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        } else if (button[i].classList.contains('Tab')) {
+          const { selectionStart } = textarea;
+          const tv = textarea.value;
+          textarea.value = `${tv.substr(0, selectionStart)}\t${tv.substr(selectionStart)}`;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        } else if (button[i].classList.contains('Backspace')) {
+          const { selectionStart } = textarea;
+          const tv = textarea.value;
+          textarea.value = tv.substr(0, selectionStart - 1) + tv.substr(selectionStart);
+          textarea.selectionStart = selectionStart - 1;
+          textarea.selectionEnd = selectionStart - 1;
+        } else if (button[i].innerHTML === 'Delete') {
+          const { selectionStart } = textarea;
+          const tv = textarea.value;
+          textarea.value = tv.substr(0, selectionStart) + tv.substr(selectionStart + 1);
+          textarea.selectionStart = selectionStart;
+          textarea.selectionEnd = selectionStart;
+        }
+      });
+    }
+  }
+  keyboard();
+  
