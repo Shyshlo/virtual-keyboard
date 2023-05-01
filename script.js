@@ -45,7 +45,7 @@ function getMain() {
   container.append(description);
   const language = document.createElement('p');
   language.className = 'language';
-  language.innerHTML = 'Для переключения языка используйте комбинацию: Ctrl + Alt';
+  language.innerHTML = 'Для переключения языка используйте комбинацию: Ctrl(удерживать) + Alt';
   container.append(language);
 }
 
