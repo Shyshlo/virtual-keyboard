@@ -50,3 +50,51 @@
     text-align: center;
     font-size: 20px;
   }
+
+
+  .Backspace, .CapsLock, .ShiftLeft, .Enter {
+    width: 100px;
+  }
+
+  .ShiftRight {
+    width: 83px;
+  }
+
+  .Tab {
+    width: 50px;
+  }
+
+  .Space {
+    width: 330px;
+  }
+
+  .button {
+    min-width: 40px;
+    height: 40px;
+    padding: 10px 5px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    background-color: rgb(37, 45, 45);
+    color: #fff;
+    box-shadow: 2px 0px 3px rgba(0,0.5,0,0), 2px 0px 3px #fff;
+  }
+
+  .button:hover {
+    background-color: #81ab98;
+    transform: scale(1.06);
+   }
+   .button:active {
+    background-color: #81ab98;
+    transform: scale(0.9);
+    box-shadow: 2px 0px 3px rgba(0,0.5,0,0), 2px 0px 3px #fff;
+    border-radius: 6px;
+  }
+
+  .button.active {
+    background-color: #81ab98;
+    transform: scale(0.95);
+    border-radius: 6px;
+  }
+
