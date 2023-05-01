@@ -1,7 +1,3 @@
-
-
-
-
 function getMain() {
   const container = document.createElement('div');
   container.className = 'container';
@@ -54,11 +50,6 @@ function getMain() {
 }
 
 getMain();
-
-
-
-
-
 
 const keys1 = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
 const keys2 = ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Delete'];
@@ -206,3 +197,196 @@ function getKeys(Arr1, Arr2, Arr3, Arr4, Arr5) {
   }
   
   getLanguage();
+
+
+
+const capsLock = document.querySelector('.CapsLock');
+const button = document.querySelectorAll('.button');
+const textarea = document.querySelector('.textarea');
+const shiftLeft = document.querySelector('.ShiftLeft');
+const shiftRight = document.querySelector('.ShiftRight');
+
+function shiftDown() {
+  shiftSwitch = true;
+  let j = 0;
+  for (let i = 0; i < button.length; i += 1) {
+    if (keys.includes(button[i].innerHTML.toLowerCase()) && lang === 'en' && capsTogle === false) {
+      button[i].innerText = button[i].innerText.toUpperCase();
+    } else if (keys.includes(button[i].innerHTML.toLowerCase()) && lang === 'en' && capsTogle === true) {
+      button[i].innerText = button[i].innerText.toLowerCase();
+    } else if (!keysSpec.includes(button[i].innerHTML) && !keys.includes(button[i].innerHTML) && lang === 'en' && !arrows.includes(button[i].innerHTML)) {
+      button[i].innerText = keysShift[j];
+      j += 1;
+    } else if (keysRus.includes(button[i].innerHTML.toLowerCase()) && lang === 'ru' && capsTogle === false) {
+      button[i].innerText = button[i].innerText.toUpperCase();
+    } else if (keysRus.includes(button[i].innerHTML.toLowerCase()) && lang === 'ru' && capsTogle === true) {
+      button[i].innerText = button[i].innerText.toLowerCase();
+    } else if (!keysSpec.includes(button[i].innerHTML) && !keysRus.includes(button[i].innerHTML) && lang === 'ru' && !arrows.includes(button[i].innerHTML)) {
+      button[i].innerText = keysShiftRu[j];
+      j += 1;
+    }
+  }
+}
+
+function shiftUp() {
+  shiftSwitch = false;
+  let j = 0;
+  for (let i = 0; i < button.length; i += 1) {
+    if (keys.includes(button[i].innerHTML.toLowerCase()) && lang === 'en' && capsTogle === false) {
+      button[i].innerText = button[i].innerText.toLowerCase();
+    } else if (keys.includes(button[i].innerHTML.toLowerCase()) && lang === 'en' && capsTogle === true) {
+      button[i].innerText = button[i].innerText.toUpperCase();
+    } else if (!keysSpec.includes(button[i].innerHTML) && !keys.includes(button[i].innerHTML.toLowerCase()) && lang === 'en' && !arrows.includes(button[i].innerHTML)) {
+      button[i].innerText = keysShiftEn[j];
+      j += 1;
+    } else if (keysRus.includes(button[i].innerHTML.toLowerCase()) && lang === 'ru' && capsTogle === false) {
+      button[i].innerText = button[i].innerText.toLowerCase();
+    } else if (keysRus.includes(button[i].innerHTML.toLowerCase()) && lang === 'ru' && capsTogle === true) {
+      button[i].innerText = button[i].innerText.toUpperCase();
+    } else if (!keysSpec.includes(button[i].innerHTML) && !keysRus.includes(button[i].innerHTML) && lang === 'ru' && !arrows.includes(button[i].innerHTML)) {
+      button[i].innerText = keysShiftRuDef[j];
+      j += 1;
+    }
+  }
+}
+
+function capsSwitch() {
+  if (capsLock.classList.contains('active')) {
+    capsTogle = false;
+    capsLock.classList.remove('active');
+    for (let i = 0; i < button.length; i += 1) {
+      if (keys.includes(button[i].innerText.toLowerCase()) && lang === 'en') {
+        button[i].innerText = button[i].innerText.toLowerCase();
+      } else if (keysRus.includes(button[i].innerText.toLowerCase()) && lang === 'ru') {
+        button[i].innerText = button[i].innerText.toLowerCase();
+      }
+    }
+  } else {
+    capsLock.classList.add('active');
+    capsTogle = true;
+    for (let i = 0; i < button.length; i += 1) {
+      if (keys.includes(button[i].innerText) && lang === 'en') {
+        button[i].innerText = button[i].innerText.toUpperCase();
+      } else if (keysRus.includes(button[i].innerText) && lang === 'ru') {
+        button[i].innerText = button[i].innerText.toUpperCase();
+      }
+    }
+  }
+}
+
+capsLock.addEventListener('click', capsSwitch);
+shiftLeft.addEventListener('mousedown', shiftDown);
+shiftLeft.addEventListener('mouseup', shiftUp);
+shiftRight.addEventListener('mousedown', shiftDown);
+shiftRight.addEventListener('mouseup', shiftUp);
+
+document.onkeydown = function keyAddActive(e) {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const { selectionStart } = textarea;
+    textarea.value = `${textarea.value.substr(0, selectionStart)}\t${textarea.value.substr(selectionStart)}`;
+    textarea.selectionStart = selectionStart + 1;
+    textarea.selectionEnd = selectionStart + 1;
+  }
+
+  if (e.key === 'CapsLock') {
+    capsSwitch();
+  }
+
+  if (e.key === 'Shift') {
+    e.preventDefault();
+    if (e.repeat === false) {
+      shiftDown();
+    }
+  }
+
+  if (e.key === 'Control') {
+    langTogle = true;
+  }
+  for (let i = 0; i < button.length; i += 1) {
+    if (button[i].classList.contains(e.code) && leftKeys.includes(e.code)) {
+      e.preventDefault();
+      button[i].classList.add('active');
+    } else if (button[i].innerText === 'Delete' && e.code === 'Delete') {
+      button[i].classList.add('active');
+    } else if (button[i].innerText === 'Enter' && e.code === 'Enter') {
+      button[i].classList.add('active');
+    } else if (button[i].innerHTML === ' ' && e.code === 'Space') {
+      button[i].classList.add('active');
+    } else if (button[i].innerText === 'Tab' && e.code === 'Tab') {
+      button[i].classList.add('active');
+    } else if (button[i].innerText === 'Backspace' && e.code === 'Backspace') {
+      button[i].classList.add('active');
+    } else if (button[i].innerText === 'Win' && e.key === 'Meta') {
+      button[i].classList.add('active');
+    }
+  }
+
+  if (lang === 'en' && shiftSwitch === false) {
+    for (let i = 0; i < button.length; i += 1) {
+      const textUp = button[i].innerText.toUpperCase();
+      for (let k = 0; k < OKEn.length; k += 1) {
+        if (e.keyCode === Number(OKEn[k]) && textUp === keyCodEn[OKEn[k]].toUpperCase()) {
+          button[i].classList.add('active');
+          e.preventDefault();
+          const { selectionStart } = textarea;
+          const tvBfr = textarea.value.substr(0, selectionStart);
+          const tvAft = textarea.value.substr(selectionStart);
+          textarea.value = tvBfr + button[i].innerText + tvAft;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        }
+      }
+    }
+  } else if (lang === 'en' && shiftSwitch === true) {
+    for (let i = 0; i < button.length; i += 1) {
+      const textUp = button[i].innerText.toUpperCase();
+      for (let k = 0; k < OKEnS.length; k += 1) {
+        if (e.keyCode === Number(OKEnS[k]) && textUp === kCEnS[OKEnS[k]].toUpperCase()) {
+          button[i].classList.add('active');
+          e.preventDefault();
+          const { selectionStart } = textarea;
+          const tvBfr = textarea.value.substr(0, selectionStart);
+          const tvAft = textarea.value.substr(selectionStart);
+          textarea.value = tvBfr + button[i].innerText + tvAft;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        }
+      }
+    }
+  } else if (lang === 'ru' && shiftSwitch === false) {
+    for (let i = 0; i < button.length; i += 1) {
+      const textUp = button[i].innerText.toUpperCase();
+      for (let k = 0; k < OKRu.length; k += 1) {
+        if (e.keyCode === Number(OKRu[k]) && textUp === keyCodRu[OKRu[k]].toUpperCase()) {
+          button[i].classList.add('active');
+          e.preventDefault();
+          const { selectionStart } = textarea;
+          const tvBfr = textarea.value.substr(0, selectionStart);
+          const tvAft = textarea.value.substr(selectionStart);
+          textarea.value = tvBfr + button[i].innerText + tvAft;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        }
+      }
+    }
+  } else if (lang === 'ru' && shiftSwitch === true) {
+    for (let i = 0; i < button.length; i += 1) {
+      const textUp = button[i].innerText.toUpperCase();
+      for (let k = 0; k < OKRuS.length; k += 1) {
+        if (e.keyCode === Number(OKRuS[k]) && textUp === kCRuS[OKRuS[k]].toUpperCase()) {
+          button[i].classList.add('active');
+          e.preventDefault();
+          const { selectionStart } = textarea;
+          const tvBfr = textarea.value.substr(0, selectionStart);
+          const tvAft = textarea.value.substr(selectionStart);
+          textarea.value = tvBfr + button[i].innerText + tvAft;
+          textarea.selectionStart = selectionStart + 1;
+          textarea.selectionEnd = selectionStart + 1;
+        }
+      }
+    }
+  }
+}
+
+
